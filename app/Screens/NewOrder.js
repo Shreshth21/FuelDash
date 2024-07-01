@@ -6,10 +6,11 @@ import styles from "../../StyleSheet";
 
 export default function NewOrder() {
 
-    const date = new Date()
+    
     const handleOnClick = async () => {
+        const date = new Date()
         try {
-          set(ref(FIREBASE_DB, `tp`), { tp: date.toString() });
+          set(ref(FIREBASE_DB, `tp/${date}`), { tp: "Hi there!" });
           Alert.alert('User created successfully!');
         } catch (error) {
           Alert.alert("Error while adding to DB: ", error);
