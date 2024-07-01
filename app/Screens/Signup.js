@@ -1,66 +1,95 @@
 import React, { useState } from 'react'
-import { Text, TextInput, View, TouchableOpacity, Alert, Button, StyleSheet, TouchableHighlight } from 'react-native'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { FIREBASE_AUTH } from '../../FirebaseConfig'
+import { Text, TextInput, View, TouchableOpacity, Alert } from 'react-native'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 import styles from '../../StyleSheet'
-import { router } from 'expo-router'
+import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig'
+import { ref, set } from 'firebase/database'
 
 
 export default function Signup() {
 
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleLogin = async () => {
+  const handleSignup = async () => {
     try {
-      await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
-      Alert.alert('User logged in successfully!');
+      await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
+      const currentUserUID = FIREBASE_AUTH.currentUser.uid;
+      set(ref(FIREBASE_DB, `users/${currentUserUID}/userdetails`), { name, phoneNumber, email });
+      console.log('User created successfully!');
+      Alert.alert('User created successfully!');
     } catch (error) {
-      console.log("Error while signin: ", error);
-      const errorMessage = "Login failed. Please check your credentials.";
-      Alert.alert("Login Failed", errorMessage);
+      console.log("Error while signup: ", error);
+      Alert.alert("Error while signup: ", error.message);
+      
     }
-
   }
+
 
   return (
     <View style={styles.container}>
+
       <TextInput
+        placeholder='Name'
+        placeholderTextColor="grey"
+        style={styles.input}
+        onChangeText={setName}
+        value={name}
+      />
+
+
+      <TextInput
+        placeholder='Phone'
+        placeholderTextColor="grey"
+        style={styles.input}
+        onChangeText={setPhoneNumber}
+        value={phoneNumber}
+        keyboardType='number-pad'
+      />
+
+
+      <TextInput
+        autoCapitalize='none'
         placeholder='Email'
         placeholderTextColor="grey"
         inputMode='email'
-        autoCapitalize='none'
         style={styles.input}
         onChangeText={setEmail}
         value={email}
       />
 
+
       <TextInput
-        placeholder='Password'
-        secureTextEntry={true}
-        placeholderTextColor="grey"
         autoCapitalize='none'
+        secureTextEntry={true}
+        placeholder='Password'
+        placeholderTextColor="grey"
         style={styles.input}
         onChangeText={setPassword}
         value={password}
       />
 
+
+      <TextInput
+        autoCapitalize='none'
+        secureTextEntry={true}
+        placeholder='Confirm Password'
+        placeholderTextColor="grey"
+        style={styles.input}
+        onChangeText={setConfirmPassword}
+        value={confirmPassword}
+      />
+
+
       <TouchableOpacity
-        onPress={handleLogin}
+        onPress={handleSignup}
         style={styles.button}
       >
-        <Text>Login</Text>
+        <Text>Signup</Text>
       </TouchableOpacity>
-
-      <View style={styles.row}>
-        <Text style={styles.text}>Don't have an account?</Text>
-        <TouchableOpacity
-          style={styles.linkButton}
-          onPress={() => router.push('/Screens/Login')}
-        >
-          <Text style={styles.linkText}>Create account</Text>
-        </TouchableOpacity>
-      </View>
 
     </View>
   )

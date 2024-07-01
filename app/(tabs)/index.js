@@ -1,8 +1,27 @@
-import { Text, TouchableOpacity, View } from "react-native";
-import styles from "../../StyleSheet";
+import React from 'react'
+import { Text, View, TouchableOpacity } from 'react-native'
 import { router } from "expo-router";
+import { onAuthStateChanged } from 'firebase/auth'
+import { FIREBASE_AUTH } from "../../FirebaseConfig";
+import { useEffect } from "react";
+import styles from '../../StyleSheet';
 
 export default function Index() {
+
+  useEffect(() => {
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      if (user) {
+        console.log("user authenticated successfully")
+        router.replace("/");
+      }
+      else {
+        console.log("user not authenticated")
+        router.replace("/Screens/Login");
+      }
+    });
+
+  }, []);
+
   return (
     <View
       style={{
@@ -17,8 +36,8 @@ export default function Index() {
         <Text>New Order</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => { router.push("/Screens/Signup") }} style={styles.button}>
-        <Text>SignUp</Text>
+      <TouchableOpacity onPress={() => { router.push("/Screens/Login") }} style={styles.button}>
+        <Text>Login</Text>
       </TouchableOpacity>
 
     </View>
