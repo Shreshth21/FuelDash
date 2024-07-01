@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, TextInput, View, TouchableOpacity, Alert, Button, StyleSheet, TouchableHighlight } from 'react-native'
+import { Text, TextInput, View, TouchableOpacity, Alert } from 'react-native'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { FIREBASE_AUTH } from '../../FirebaseConfig'
 import styles from '../../StyleSheet'
@@ -11,16 +11,33 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const handleLogin = async () => {
-    try {
-      await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
-      console.log("FUELDASH: User logged in successfully!");
-      Alert.alert('User logged in successfully!');
-    } catch (error) {
-      console.log("FUELDASH: Error while signin: ", error);
-      const errorMessage = "Login failed. Please check your credentials.";
-      Alert.alert("Login Failed", errorMessage);
+    if (isValid()) {
+      try {
+        await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
+        console.log("FUELDASH: User logged in successfully!");
+        Alert.alert('User logged in successfully!');
+        router.replace("/");
+      } catch (error) {
+        console.log("FUELDASH: Error while signin: ", error);
+        setErrorMessage(error.message);
+      }
     }
+  }
+
+  const isValid = () => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !re.test(String(email).toLowerCase())) {
+      setErrorMessage('Please enter a valid email address.');
+    } else if (!password) {
+      setErrorMessage('Password is required.');
+    } else {
+      setErrorMessage(null);
+      return true;
+    }
+    return false;
   }
 
   return (
@@ -44,6 +61,8 @@ export default function Login() {
         onChangeText={setPassword}
         value={password}
       />
+
+      {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
 
       <TouchableOpacity
         onPress={handleLogin}

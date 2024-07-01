@@ -19,7 +19,7 @@ export default function OrderHistory() {
             timestamp,
             ...details
           };
-        }).reverse();
+        });
         setData(dataArray);
       }
 

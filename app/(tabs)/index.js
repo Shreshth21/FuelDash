@@ -9,7 +9,7 @@ import styles from '../../StyleSheet';
 export default function Index() {
 
   useEffect(() => {
-    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
       if (user) {
         console.log("FUELDASH: user authenticated successfully")
         router.replace("/");
@@ -19,6 +19,8 @@ export default function Index() {
         router.replace("/Screens/Login");
       }
     });
+
+    return unsubscribe;
 
   }, []);
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
-import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import styles from "../../StyleSheet";
 
 export default function DateTimeAndroid({ onTimeChange }) {

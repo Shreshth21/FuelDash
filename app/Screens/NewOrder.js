@@ -20,6 +20,8 @@ export default function NewOrder() {
   const [isLoading, setIsLoading] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
 
+  const [errorMessage, setErrorMessage] = useState(null);
+
   useEffect(() => {
     const getLocation = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -63,13 +65,22 @@ export default function NewOrder() {
   }
 
   const addDataToDB = async () => {
-    await geocode();
-    const currentUserUID = FIREBASE_AUTH.currentUser.uid;
+    if (isValid()) {
+      try {
+        await geocode();
+        const currentUserUID = FIREBASE_AUTH.currentUser.uid;
 
-    set(ref(FIREBASE_DB, `users/${currentUserUID}/orderhistory/${formatDate(new Date())}`),
-      { scheduledDate: formatDate(scheduledDate), fuelType, quantity, location, address });
-    Alert.alert("Order requested successfully!");
-    clearConsole();
+        set(ref(FIREBASE_DB, `users/${currentUserUID}/orderhistory/${formatDate(new Date())}`),
+          { scheduledDate: formatDate(scheduledDate), fuelType, quantity, location, address });
+
+        Alert.alert("Order requested successfully!");
+        clearConsole();
+      } catch (error) {
+        console.log("error while adding a new entry to DB: ", error);
+        setErrorMessage(error.message);
+      }
+
+    }
   }
 
   const formatDate = (date) => {
@@ -85,7 +96,6 @@ export default function NewOrder() {
 
     return `${day} ${month}'${year} ${formattedHours}:${minutes} ${ampm}`;
   };
-
 
   const fetchSuggestions = async (text) => {
     setAddress(text);
@@ -111,6 +121,22 @@ export default function NewOrder() {
     setAddress('')
     setSuggestions([]);
   }
+
+  const isValid = () => {
+    if (!fuelType) {
+      setErrorMessage('Please select a fuel type.');
+    } else if (!quantity) {
+      setErrorMessage('Quantity cannot be empty.');
+    } else if (!address) {
+      setErrorMessage('Address cannot be empty.');
+    } else {
+      setErrorMessage(null);
+      return true;
+    }
+    return false;
+  }
+
+
   return (
     <View style={styles.new_order_container}>
 
@@ -210,6 +236,8 @@ export default function NewOrder() {
       />}
 
       <View style={styles.container}>
+
+        {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
 
         <TouchableOpacity onPress={addDataToDB}
           style={styles.new_order_button}
