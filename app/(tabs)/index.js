@@ -23,21 +23,20 @@ export default function Index() {
   }, []);
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.js to edit this screen.</Text>
+    <View style={styles.container}>
 
-      <TouchableOpacity onPress={() => { router.push("/Screens/NewOrder") }} style={styles.button}>
+      <Text style={styles.header}>Welcome!</Text>
+
+      <Text>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ullam, architecto fuga quo placeat consequatur, voluptates sequi fugit excepturi aspernatur natus quis iusto velit impedit expedita. Nostrum, animi sed. Quo, eaque!</Text>
+
+      <TouchableOpacity style={styles.button} onPress={() => { router.push("/Screens/NewOrder") }}>
         <Text>New Order</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => { router.push("/Screens/Login") }} style={styles.button}>
-        <Text>Login</Text>
+      <Text style={styles.sectionTitle}>Support</Text>
+
+      <TouchableOpacity style={styles.button} onPress={() => { router.push("/Screens/ContactUs") }}>
+        <Text>Contact Us</Text>
       </TouchableOpacity>
 
     </View>
