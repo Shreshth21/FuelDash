@@ -17,6 +17,10 @@ export default function Index() {
         <Text>New Order</Text>
       </TouchableOpacity>
 
+      <TouchableOpacity onPress={() => { router.push("/Screens/Signup") }} style={styles.button}>
+        <Text>SignUp</Text>
+      </TouchableOpacity>
+
     </View>
   );
 }
