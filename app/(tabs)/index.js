@@ -11,11 +11,11 @@ export default function Index() {
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
       if (user) {
-        console.log("user authenticated successfully")
+        console.log("FUELDASH: user authenticated successfully")
         router.replace("/");
       }
       else {
-        console.log("user not authenticated")
+        console.log("FUELDASH: user not authenticated")
         router.replace("/Screens/Login");
       }
     });

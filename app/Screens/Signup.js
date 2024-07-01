@@ -22,7 +22,7 @@ export default function Signup() {
       console.log('User created successfully!');
       Alert.alert('User created successfully!');
     } catch (error) {
-      console.log("Error while signup: ", error);
+      console.log("FUELDASH: Error while signup: ", error);
       Alert.alert("Error while signup: ", error.message);
       
     }

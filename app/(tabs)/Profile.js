@@ -26,10 +26,10 @@ export default function Profile() {
   const signout = () => {
     try {
       FIREBASE_AUTH.signOut();
-      console.log("Signed out successfuly!")
+      console.log("FUELDASH: Signed out successfuly!")
       Alert.alert("Signed out successfuly!");
     } catch (error) {
-      console.log("Error while signout: ", error)
+      console.log("FUELDASH: Error while signout: ", error)
       Alert.alert("Error while signout: ", error.message);
     }
   }

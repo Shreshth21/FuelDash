@@ -14,10 +14,10 @@ export default function Login() {
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
-      console.log("User logged in successfully!");
+      console.log("FUELDASH: User logged in successfully!");
       Alert.alert('User logged in successfully!');
     } catch (error) {
-      console.log("Error while signin: ", error);
+      console.log("FUELDASH: Error while signin: ", error);
       const errorMessage = "Login failed. Please check your credentials.";
       Alert.alert("Login Failed", errorMessage);
     }
