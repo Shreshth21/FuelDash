@@ -25,6 +25,14 @@ export default function ContactUs() {
     Linking.openURL(`tel:${phoneNumber}`);
   };
 
+  const handleOpenMap = () => {
+    const latitude = 22.5485558;
+    const longitude = 72.9744689;
+    const url = `https://maps.google.com/?q=${latitude},${longitude}`;
+
+    Linking.openURL(url);
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.contact_container}>
 
@@ -51,10 +59,12 @@ export default function ContactUs() {
 
       <View style={styles.contact_section}>
         <Text style={styles.contact_label}>Visit Us</Text>
-        <Text style={styles.contact_content}>F2, Vahanvati complex,</Text>
-        <Text style={styles.contact_content}>Chikhodra crossing,</Text>
-        <Text style={styles.contact_content}>Chikhodra, Anand,</Text>
-        <Text style={styles.contact_content}>Gujarat 388320</Text>
+        <TouchableOpacity onPress={handleOpenMap}>
+          <Text style={styles.contact_content}>F2, Vahanvati complex,</Text>
+          <Text style={styles.contact_content}>Chikhodra crossing,</Text>
+          <Text style={styles.contact_content}>Chikhodra, Anand,</Text>
+          <Text style={styles.contact_content}>Gujarat 388320</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.contact_section}>
