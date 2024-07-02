@@ -14,6 +14,7 @@ export default function NewOrder() {
 
   const [fuelType, setFuelType] = useState(null);
   const [quantity, setQuantity] = useState(0);
+  const [name, setName] = useState('');
   const [scheduledDate, setScheduledDate] = useState(new Date());
   const [location, setLocation] = useState();
   const [address, setAddress] = useState('');
@@ -71,7 +72,7 @@ export default function NewOrder() {
         const currentUserUID = FIREBASE_AUTH.currentUser.uid;
 
         set(ref(FIREBASE_DB, `users/${currentUserUID}/orderhistory/${formatDate(new Date())}`),
-          { scheduledDate: formatDate(scheduledDate), fuelType, quantity, location, address });
+          { scheduledDate: formatDate(scheduledDate), fuelType, name, quantity, location, address });
 
         Alert.alert("Order requested successfully!");
         clearConsole();
@@ -125,8 +126,12 @@ export default function NewOrder() {
   const isValid = () => {
     if (!fuelType) {
       setErrorMessage('Please select a fuel type.');
+    } else if (!name) {
+      setErrorMessage('Name cannot be empty.');
     } else if (!quantity) {
       setErrorMessage('Quantity cannot be empty.');
+    } else if (quantity < 500) {
+      setErrorMessage('Minimum quanity is 500 liters.');
     } else if (!address) {
       setErrorMessage('Address cannot be empty.');
     } else {
@@ -182,6 +187,16 @@ export default function NewOrder() {
           />
         )}
       />
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Enterprise Name"
+          placeholderTextColor="grey"
+          style={styles.new_order_input}
+          onChangeText={setName}
+          value={name}
+        />
+      </View>
 
       <View style={styles.inputContainer}>
         <TextInput

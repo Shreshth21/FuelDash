@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 50,
         // backgroundColor: '#cacbcc',
-        
+
     },
     dropdown: {
         margin: 16,
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     date: {
         marginTop: 20,
         borderRadius: 30,
-        color:'black',
+        color: 'black',
     },
     inputWithButtonContainer: {
         position: "relative",
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         paddingLeft: 10,
         borderRadius: 7,
-        paddingRight: 80, 
+        paddingRight: 80,
     },
     inputContainer: {
         marginTop: 20,
@@ -189,23 +189,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 50,
-      },
-      new_order_input: {
+    },
+    new_order_input: {
         width: "100%",
         height: 40,
         borderColor: "grey",
         borderWidth: 2,
         paddingLeft: 10,
         borderRadius: 7,
-      },
-      errorText: {
+    },
+    errorText: {
         color: 'red',
         marginTop: 8,
-      },
-      disabled_button_text:{
+    },
+    disabled_button_text: {
         color: '#bdbdbd'
-      },
-      buttonDisabled:{
+    },
+    buttonDisabled: {
         width: '25%',
         height: 30,
         borderColor: '#cacccf',
@@ -215,8 +215,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 50,
         backgroundColor: '#d5d7db',
-      },
-      new_order_buttonDisabled:{
+    },
+    new_order_buttonDisabled: {
         width: '35%',
         height: 35,
         borderColor: '#cacccf',
@@ -226,8 +226,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 50,
         backgroundColor: '#d5d7db',
-      },
-      date_button:{
+    },
+    date_button: {
         width: '35%',
         height: 32,
         borderColor: 'transparent',
@@ -238,8 +238,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         marginRight: 5,
         backgroundColor: '#e0dcdc'
-      },
-      time_button:{
+    },
+    time_button: {
         width: '25%',
         height: 32,
         borderColor: 'transparent',
@@ -249,12 +249,57 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 8,
         backgroundColor: '#e0dcdc'
-      },
-      buttonContainer: {
+    },
+    buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-      },
+    },
+    image: {
+        width: '100%',
+        height: 140,
+        resizeMode: 'contain',
+        borderRadius: 15,
+        marginBottom: 20,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#333',
+        textAlign: 'center',
+        marginBottom: 10,
+    },
+    description: {
+        fontSize: 16,
+        color: '#555',
+        textAlign: 'justify',
+        marginBottom: 20,
+    },
+    contact_container: {
+        padding: 20,
+    },
+    intro: {
+        fontSize: 16,
+        marginBottom: 20,
+    },
+    contact_section: {
+        marginBottom: 20,
+    },
+    contact_label: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+    contact_content: {
+        fontSize: 16,
+        marginBottom: 5,
+    },
+    contact_description: {
+        fontSize: 14,
+        color: 'gray',
+        marginBottom: 10,
+    },
+
 });
 
 export default styles;
