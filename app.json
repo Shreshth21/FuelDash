@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "FuelDash",
-    "slug": "FuelDash",
+    "slug": "fueldash",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -38,8 +38,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "81c66518-fd00-4323-a84f-2381344c9f58"
+        "projectId": "e4848479-e297-4ba8-8fdf-0672ce4c2786"
       }
-    }
+    },
+    "owner": "shreshth21"
   }
 }
