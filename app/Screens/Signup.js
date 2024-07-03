@@ -22,7 +22,8 @@ export default function Signup() {
       try {
         await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
         const currentUserUID = FIREBASE_AUTH.currentUser.uid;
-        set(ref(FIREBASE_DB, `users/${currentUserUID}/userdetails`), { name, phoneNumber, email });
+        const profileImagRandomSeed = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        set(ref(FIREBASE_DB, `users/${currentUserUID}/userdetails`), { name, phoneNumber, email, profileImagRandomSeed });
         console.log('User created successfully!');
         Alert.alert('User created successfully!');
         router.replace("/");

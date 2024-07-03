@@ -51,14 +51,12 @@ export default function Index() {
         Ensure seamless and efficient refueling for your static and heavy earthmoving equipment with our doorstep diesel delivery service. Enjoy the convenience of on-site refueling at the current market price, eliminating the hassle and cost of traveling to the RO. Our service guarantees no spillage or pilferage, saving you time and money. Trust us for reliable and hassle-free diesel delivery right where you need it.
       </Text>
 
-      <TouchableOpacity style={styles.button} onPress={() => { router.push("/Screens/NewOrder") }}>
-        <Text>New Order</Text>
+      <TouchableOpacity style={styles.index_button} onPress={() => { router.push("/Screens/NewOrder") }}>
+        <Text style={{color:'#fae000'}}>New Order</Text>
       </TouchableOpacity>
 
-      <Text style={styles.sectionTitle}>Support</Text>
-
-      <TouchableOpacity style={styles.button} onPress={() => { router.push("/Screens/ContactUs") }}>
-        <Text>Contact Us</Text>
+      <TouchableOpacity style={styles.index_button} onPress={() => { router.push("/Screens/ContactUs") }}>
+        <Text style={{color:'#fae000'}}>Contact Us</Text>
       </TouchableOpacity>
 
     </View>

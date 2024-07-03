@@ -49,6 +49,7 @@ export default function OrderHistory() {
             maxToRenderPerBatch={10}
             windowSize={21}
             removeClippedSubviews={true}
+            showsVerticalScrollIndicator={false}
           /> :
           <Text style={styles.noOrdersText}>The orders will appear here!</Text>
       }

@@ -6,6 +6,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
     },
+    index_container: {
+        flex: 1,
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor: '#317bc9',
+    },
     input: {
         width: '80%',
         height: 35,
@@ -26,6 +32,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 50,
         // backgroundColor: '#cacbcc',
+
+    },
+    index_button: {
+        width: '100%',
+        height: 30,
+        marginTop: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius:3,
+        backgroundColor: '#317bc9',
 
     },
     dropdown: {
@@ -265,13 +281,13 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#333',
+        color: '#1e2024',
         textAlign: 'center',
         marginBottom: 10,
     },
     description: {
         fontSize: 16,
-        color: '#555',
+        color: '#1e2024',
         textAlign: 'justify',
         marginBottom: 20,
     },

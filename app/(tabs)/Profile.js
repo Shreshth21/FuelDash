@@ -4,10 +4,13 @@ import { router } from 'expo-router'
 import { onValue, ref } from 'firebase/database'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig'
 import styles from '../../StyleSheet'
+import { createAvatar } from '@dicebear/core';
+import { adventurerNeutral } from '@dicebear/collection';
+import { SvgXml } from 'react-native-svg';
 
 export default function Profile() {
 
-  const [profileImage, setProfileImage] = useState(null);
+  const [profileImage, setProfileImage] = useState();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -20,6 +23,14 @@ export default function Profile() {
       setName(fetchedData.userdetails.name);
       setEmail(fetchedData.userdetails.email);
       setPhone(fetchedData.userdetails.phoneNumber);
+      
+      const randomSeed = fetchedData.userdetails.profileImagRandomSeed
+      const avatar = createAvatar(adventurerNeutral, {
+        seed: randomSeed ? randomSeed : 'abcd',
+        radius: 10,
+      }).toString();
+      
+      setProfileImage(avatar);
     });
   }, []);
 
@@ -36,9 +47,7 @@ export default function Profile() {
 
   return (
     <View>
-
-      <Image source={profileImage ? { uri: profileImage } : require('../../assets/images/default-user.png')} style={{ width: 108, height: 100, borderRadius: 30, alignSelf: 'center', marginBottom: 10, }} />
-
+      {profileImage && <SvgXml xml={profileImage} style={{ width: 108, height: 100, borderRadius: 10, alignSelf: 'center', marginBottom: 10, marginTop: 20, }} />}
       <View style={styles.section}>
         <Text style={styles.label}>Name:</Text>
         <Text style={styles.content}>{name}</Text>
