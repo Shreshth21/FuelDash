@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "FuelDash2",
-    "slug": "FuelDash2",
+    "name": "FuelDash",
+    "slug": "FuelDash",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -20,7 +20,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.shreshth21.FuelDash2"
+      "package": "com.shreshth21.FuelDash"
     },
     "web": {
       "bundler": "metro",
