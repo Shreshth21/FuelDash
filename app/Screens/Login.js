@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { FIREBASE_AUTH } from '../../FirebaseConfig'
 import styles from '../../StyleSheet'
 import { router } from 'expo-router'
+import { showToastMessage } from '../../components/ToastMessage';
 
 
 export default function Login() {
@@ -18,7 +19,7 @@ export default function Login() {
       try {
         await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
         console.log("FUELDASH: User logged in successfully!");
-        Alert.alert('User logged in successfully!');
+        showToastMessage('User logged in successfully!');
         router.replace("/");
       } catch (error) {
         console.log("FUELDASH: Error while signin: ", error);

@@ -3,6 +3,7 @@ import React from 'react'
 import * as MailComposer from 'expo-mail-composer';
 import * as Linking from 'expo-linking';
 import styles from '../../StyleSheet';
+import { showToastMessage } from '../../components/ToastMessage';
 
 export default function ContactUs() {
 
@@ -10,14 +11,9 @@ export default function ContactUs() {
     MailComposer.composeAsync({
       recipients: ['pankhil.bhatia@gmail.com'],
     })
-      .then(result => {
-        if (result.status === MailComposer.MailComposerStatus.SENT) {
-          Alert.alert('Success', 'Email sent successfully!');
-        }
-      })
       .catch(error => {
-        Alert.alert('Error', 'An error occurred while sending the email.');
         console.error(error);
+        showToastMessage('An error occurred while sending the email.');
       });
   };
 
@@ -26,8 +22,8 @@ export default function ContactUs() {
   };
 
   const handleOpenMap = () => {
-    const latitude = 22.5485558;
-    const longitude = 72.9744689;
+    const latitude = 22.557389;
+    const longitude = 72.990806;
     const url = `https://maps.google.com/?q=${latitude},${longitude}`;
 
     Linking.openURL(url);
@@ -69,9 +65,8 @@ export default function ContactUs() {
 
       <View style={styles.contact_section}>
         <Text style={styles.contact_label}>Business Hours</Text>
-        <Text style={styles.contact_content}>Monday to Friday: 9 AM - 6 PM</Text>
-        <Text style={styles.contact_content}>Saturday: 10 AM - 4 PM</Text>
-        <Text style={styles.contact_content}>Sunday: Closed</Text>
+        <Text style={styles.contact_content}>Monday to Sunday</Text>
+        <Text style={styles.contact_content}>(6 AM - 10 PM)</Text>
       </View>
 
     </ScrollView>

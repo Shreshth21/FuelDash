@@ -7,6 +7,7 @@ import styles from '../../StyleSheet'
 import { createAvatar } from '@dicebear/core';
 import { adventurerNeutral } from '@dicebear/collection';
 import { SvgXml } from 'react-native-svg';
+import { showToastMessage } from '../../components/ToastMessage';
 
 export default function Profile() {
 
@@ -23,13 +24,13 @@ export default function Profile() {
       setName(fetchedData.userdetails.name);
       setEmail(fetchedData.userdetails.email);
       setPhone(fetchedData.userdetails.phoneNumber);
-      
+
       const randomSeed = fetchedData.userdetails.profileImagRandomSeed
       const avatar = createAvatar(adventurerNeutral, {
         seed: randomSeed ? randomSeed : 'abcd',
         radius: 10,
       }).toString();
-      
+
       setProfileImage(avatar);
     });
   }, []);
@@ -38,10 +39,9 @@ export default function Profile() {
     try {
       FIREBASE_AUTH.signOut();
       console.log("FUELDASH: Signed out successfuly!")
-      Alert.alert("Signed out successfuly!");
     } catch (error) {
       console.log("FUELDASH: Error while signout: ", error)
-      Alert.alert("Error while signout: ", error.message);
+      showToastMessage("Error while signout: " + error.message)
     }
   }
 

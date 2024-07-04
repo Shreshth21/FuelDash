@@ -9,6 +9,7 @@ import styles from "../../StyleSheet";
 import axios from 'axios';
 import DateTimeAndroid from "../../components/android/DateTimeAndroid";
 import DateTimeIos from "../../components/ios/DateTimeIos";
+import { showToastMessage } from '../../components/ToastMessage';
 
 export default function NewOrder() {
 
@@ -29,6 +30,7 @@ export default function NewOrder() {
 
       if (status !== "granted") {
         Alert.alert("Please grant location permission");
+        await Location.requestForegroundPermissionsAsync();
         return;
       }
 
@@ -74,7 +76,7 @@ export default function NewOrder() {
         set(ref(FIREBASE_DB, `users/${currentUserUID}/orderhistory/${formatDate(new Date())}`),
           { scheduledDate: formatDate(scheduledDate), fuelType, name, quantity, location, address });
 
-        Alert.alert("Order requested successfully!");
+        showToastMessage("Order requested successfully!")
         clearConsole();
       } catch (error) {
         console.log("error while adding a new entry to DB: ", error);

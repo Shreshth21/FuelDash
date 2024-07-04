@@ -5,6 +5,7 @@ import styles from '../../StyleSheet'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig'
 import { ref, set } from 'firebase/database'
 import { router } from 'expo-router'
+import { showToastMessage } from '../../components/ToastMessage';
 
 
 export default function Signup() {
@@ -25,7 +26,7 @@ export default function Signup() {
         const profileImagRandomSeed = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         set(ref(FIREBASE_DB, `users/${currentUserUID}/userdetails`), { name, phoneNumber, email, profileImagRandomSeed });
         console.log('User created successfully!');
-        Alert.alert('User created successfully!');
+        showToastMessage('User created successfully!');
         router.replace("/");
       } catch (error) {
         console.log("FUELDASH: Error while signup: ", error);

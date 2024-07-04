@@ -4,6 +4,8 @@ import { Tabs } from 'expo-router';
 import { StatusBar } from 'react-native';
 
 export default function TabLayout() {
+
+  StatusBar.setBarStyle('dark-content');
   return (
     <Tabs >
       <Tabs.Screen name="index"
