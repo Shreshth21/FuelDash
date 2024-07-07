@@ -3,7 +3,7 @@ import { ActivityIndicator, Alert, Modal, Text, TextInput, TouchableOpacity, Vie
 import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import * as Location from "expo-location";
-import { ref, set } from 'firebase/database';
+import { ref, set, push } from 'firebase/database';
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../FirebaseConfig";
 import styles from "../../StyleSheet";
 import axios from 'axios';
@@ -73,8 +73,11 @@ export default function NewOrder() {
         await geocode();
         const currentUserUID = FIREBASE_AUTH.currentUser.uid;
 
-        set(ref(FIREBASE_DB, `users/${currentUserUID}/orderhistory/${formatDate(new Date())}`),
-          { scheduledDate: formatDate(scheduledDate), fuelType, name, quantity, location, address });
+        const data = { createdDate: new Date().getTime(), scheduledDate: scheduledDate.getTime(), fuelType, name, quantity, location, address }
+        const dataRef = ref(FIREBASE_DB, `users/${currentUserUID}/orderhistory`);
+        const newEntryRef = push(dataRef);
+        await set(newEntryRef, data);
+        console.log('Data stored successfully with unique ID:', newEntryRef.key);
 
         showToastMessage("Order requested successfully!")
         clearConsole();
@@ -85,20 +88,6 @@ export default function NewOrder() {
 
     }
   }
-
-  const formatDate = (date) => {
-    const day = String(date.getDate()).padStart(2, '0');
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const month = monthNames[date.getMonth()];
-    const year = String(date.getFullYear()).slice(-2);
-
-    const hours = date.getHours();
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    const formattedHours = hours % 12 || 12;
-
-    return `${day} ${month}'${year} ${formattedHours}:${minutes} ${ampm}`;
-  };
 
   const fetchSuggestions = async (text) => {
     setAddress(text);
