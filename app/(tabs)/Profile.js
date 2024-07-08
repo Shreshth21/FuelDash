@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { Alert, Image, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View, Modal, TextInput, StyleSheet } from 'react-native'
 import { router } from 'expo-router'
-import { onValue, ref } from 'firebase/database'
+import { onValue, ref, remove } from 'firebase/database'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig'
 import styles from '../../StyleSheet'
 import { createAvatar } from '@dicebear/core';
 import { adventurerNeutral } from '@dicebear/collection';
 import { SvgXml } from 'react-native-svg';
 import { showToastMessage } from '../../components/ToastMessage';
+import { deleteUser, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth'
+
 
 export default function Profile() {
 
@@ -15,10 +17,12 @@ export default function Profile() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [currentUser, setCurrentUser] = useState();
 
   useEffect(() => {
-    const currentUserUID = FIREBASE_AUTH.currentUser.uid;
-    const starCountRef = ref(FIREBASE_DB, `users/${currentUserUID}`);
+    const currentUser = FIREBASE_AUTH.currentUser;
+    setCurrentUser(currentUser);
+    const starCountRef = ref(FIREBASE_DB, `users/${currentUser.uid}`);
     onValue(starCountRef, (snapshot) => {
       const fetchedData = snapshot.val();
       setName(fetchedData.userdetails.name);
@@ -45,6 +49,17 @@ export default function Profile() {
     }
   }
 
+  const deleteAccount = async() => {
+    try {
+      remove(ref(FIREBASE_DB, `users/${currentUser.uid}`));
+      await deleteUser(currentUser);
+      console.log("FUELDASH: deleted account successfully!")
+    } catch (error) {
+      console.log("FUELDASH: Error while deleting account: ", error)
+      showToastMessage("Error while deleting account: " + error.message)
+    }
+  }
+
   return (
     <View>
       {profileImage && <SvgXml xml={profileImage} style={{ width: 108, height: 100, borderRadius: 10, alignSelf: 'center', marginBottom: 10, marginTop: 20, }} />}
@@ -64,14 +79,19 @@ export default function Profile() {
       </View>
 
       <View style={styles.container}>
-        <TouchableOpacity onPress={signout} style={styles.button}>
+        <TouchableOpacity onPress={signout} style={styles.delete_button}>
           <Text>Signout</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => { router.push("/Screens/ContactUs") }} style={styles.button}>
+        <TouchableOpacity onPress={() => { router.push("/Screens/ContactUs") }} style={styles.delete_button}>
           <Text>Contact us</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={deleteAccount} style={styles.delete_button}>
+          <Text>Delete Account</Text>
+        </TouchableOpacity>
       </View>
+
     </View>
   )
 }

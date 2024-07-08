@@ -3,13 +3,14 @@ import { ActivityIndicator, Alert, Modal, Text, TextInput, TouchableOpacity, Vie
 import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import * as Location from "expo-location";
-import { ref, set, push } from 'firebase/database';
+import { ref, set, push, onValue } from 'firebase/database';
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../FirebaseConfig";
 import styles from "../../StyleSheet";
 import axios from 'axios';
 import DateTimeAndroid from "../../components/android/DateTimeAndroid";
 import DateTimeIos from "../../components/ios/DateTimeIos";
 import { showToastMessage } from '../../components/ToastMessage';
+import { whatsAppMessage } from '../../components/WhatsAppMessage';
 
 export default function NewOrder() {
 
@@ -21,6 +22,8 @@ export default function NewOrder() {
   const [address, setAddress] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
+  const [userName, setUserName] = useState();
+  const [phone, setPhone] = useState();
 
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -51,6 +54,16 @@ export default function NewOrder() {
     getLocation();
   }, []);
 
+  useEffect(() => {
+    const currentUser = FIREBASE_AUTH.currentUser;
+    const starCountRef = ref(FIREBASE_DB, `users/${currentUser.uid}`);
+    onValue(starCountRef, (snapshot) => {
+      const fetchedData = snapshot.val();
+      setUserName(fetchedData.userdetails.name);
+      setPhone(fetchedData.userdetails.phoneNumber);
+    });
+  }, []);
+
   const onTimeChange = (selectedDate) => {
     setScheduledDate(selectedDate);
   };
@@ -63,6 +76,7 @@ export default function NewOrder() {
   const clearConsole = () => {
     setAddress('');
     setQuantity('');
+    setName('');
     setFuelType(null);
     setLocation(null);
   }
@@ -78,9 +92,9 @@ export default function NewOrder() {
         const newEntryRef = push(dataRef);
         await set(newEntryRef, data);
         console.log('Data stored successfully with unique ID:', newEntryRef.key);
-
-        showToastMessage("Order requested successfully!")
+        showToastMessage("Order requested successfully!");
         clearConsole();
+        whatsAppMessage(newEntryRef.key, name, (quantity+" liters"), phone, scheduledDate.toLocaleString(), address, location.coords.longitude, location.coords.latitude);
       } catch (error) {
         console.log("error while adding a new entry to DB: ", error);
         setErrorMessage(error.message);

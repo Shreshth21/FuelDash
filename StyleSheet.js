@@ -34,6 +34,18 @@ const styles = StyleSheet.create({
         // backgroundColor: '#cacbcc',
 
     },
+    delete_button: {
+        width: '35%',
+        height: 30,
+        borderColor: 'grey',
+        borderWidth: 2,
+        marginTop: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 50,
+        // backgroundColor: '#cacbcc',
+
+    },
     index_button: {
         width: '100%',
         height: 30,
