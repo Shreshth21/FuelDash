@@ -49,16 +49,7 @@ export default function Profile() {
     }
   }
 
-  const deleteAccount = async() => {
-    try {
-      remove(ref(FIREBASE_DB, `users/${currentUser.uid}`));
-      await deleteUser(currentUser);
-      console.log("FUELDASH: deleted account successfully!")
-    } catch (error) {
-      console.log("FUELDASH: Error while deleting account: ", error)
-      showToastMessage("Error while deleting account: " + error.message)
-    }
-  }
+
 
   return (
     <View>
@@ -87,7 +78,7 @@ export default function Profile() {
           <Text>Contact us</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={deleteAccount} style={styles.delete_button}>
+        <TouchableOpacity onPress={() => { router.push("/Screens/DeleteAccount") }} style={styles.delete_button}>
           <Text>Delete Account</Text>
         </TouchableOpacity>
       </View>

@@ -17,10 +17,12 @@ export default function Index() {
     const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
       if (user) {
         console.log("FUELDASH: user authenticated successfully")
+        if (router.canDismiss()) router.dismissAll();
         router.replace("/");
       }
       else {
         console.log("FUELDASH: user not authenticated")
+        if (router.canDismiss()) router.dismissAll();
         router.replace("/Screens/Login");
       }
     });
@@ -52,11 +54,11 @@ export default function Index() {
       </Text>
 
       <TouchableOpacity style={styles.index_button} onPress={() => { router.push("/Screens/NewOrder") }}>
-        <Text style={{color:'#fae000'}}>New Order</Text>
+        <Text style={{ color: '#fae000' }}>New Order</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.index_button} onPress={() => { router.push("/Screens/ContactUs") }}>
-        <Text style={{color:'#fae000'}}>Contact Us</Text>
+        <Text style={{ color: '#fae000' }}>Contact Us</Text>
       </TouchableOpacity>
 
     </View>
