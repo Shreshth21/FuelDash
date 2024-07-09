@@ -18,11 +18,9 @@ export default function NewOrder() {
   const [quantity, setQuantity] = useState(0);
   const [name, setName] = useState('');
   const [scheduledDate, setScheduledDate] = useState(new Date());
-  const [location, setLocation] = useState();
   const [address, setAddress] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
-  const [userName, setUserName] = useState();
   const [phone, setPhone] = useState();
 
   const [errorMessage, setErrorMessage] = useState(null);
@@ -39,7 +37,6 @@ export default function NewOrder() {
 
       setIsLoading(true);
       let currentLocation = await Location.getCurrentPositionAsync();
-      setLocation(currentLocation);
 
       const currentAddress = await Location.reverseGeocodeAsync({
         longitude: currentLocation.coords.longitude,
@@ -59,7 +56,6 @@ export default function NewOrder() {
     const starCountRef = ref(FIREBASE_DB, `users/${currentUser.uid}`);
     onValue(starCountRef, (snapshot) => {
       const fetchedData = snapshot.val();
-      setUserName(fetchedData.userdetails.name);
       setPhone(fetchedData.userdetails.phoneNumber);
     });
   }, []);
@@ -70,7 +66,7 @@ export default function NewOrder() {
 
   const geocode = async () => {
     const geocodedLocation = await Location.geocodeAsync(address);
-    setLocation(geocodedLocation);
+    return geocodedLocation[0];
   };
 
   const clearConsole = () => {
@@ -78,23 +74,23 @@ export default function NewOrder() {
     setQuantity('');
     setName('');
     setFuelType(null);
-    setLocation(null);
   }
 
   const addDataToDB = async () => {
     if (isValid()) {
       try {
-        await geocode();
+        const location = await geocode();
+        console.log(location);
         const currentUserUID = FIREBASE_AUTH.currentUser.uid;
 
-        const data = { createdDate: new Date().getTime(), scheduledDate: scheduledDate.getTime(), fuelType, name, quantity, location, address }
+        const data = { createdDate: new Date().getTime(), scheduledDate: scheduledDate.getTime(), fuelType, name, quantity, address }
         const dataRef = ref(FIREBASE_DB, `users/${currentUserUID}/orderhistory`);
         const newEntryRef = push(dataRef);
         await set(newEntryRef, data);
         console.log('Data stored successfully with unique ID:', newEntryRef.key);
         showToastMessage("Order requested successfully!");
         clearConsole();
-        whatsAppMessage(newEntryRef.key, name, (quantity+" liters"), phone, scheduledDate.toLocaleString(), address, location.coords.longitude, location.coords.latitude);
+        whatsAppMessage(newEntryRef.key, name, (quantity+" liters"), phone, scheduledDate.toLocaleString(), address, location.longitude, location.latitude);
       } catch (error) {
         console.log("error while adding a new entry to DB: ", error);
         setErrorMessage(error.message);
