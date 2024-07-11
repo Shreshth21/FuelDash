@@ -25,11 +25,11 @@ export default function Profile() {
     const starCountRef = ref(FIREBASE_DB, `users/${currentUser.uid}`);
     onValue(starCountRef, (snapshot) => {
       const fetchedData = snapshot.val();
-      setName(fetchedData.userdetails.name);
-      setEmail(fetchedData.userdetails.email);
-      setPhone(fetchedData.userdetails.phoneNumber);
+      setName(fetchedData?.userdetails?.name);
+      setEmail(fetchedData?.userdetails?.email);
+      setPhone(fetchedData?.userdetails?.phoneNumber);
 
-      const randomSeed = fetchedData.userdetails.profileImagRandomSeed
+      const randomSeed = fetchedData?.userdetails?.profileImagRandomSeed
       const avatar = createAvatar(adventurerNeutral, {
         seed: randomSeed ? randomSeed : 'abcd',
         radius: 10,

@@ -35,11 +35,11 @@ export default function DateTimeAndroid({ onTimeChange }) {
             <View style={styles.buttonContainer}>
 
                 <TouchableOpacity style={styles.date_button} onPress={showDatepicker}>
-                    <Text style={{ color: '#616060' }}>{scheduledDate.toDateString()}</Text>
+                    <Text style={{ color: '#616060' }}>{scheduledDate?.toDateString()}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.time_button} onPress={showTimepicker}>
-                    <Text style={{ color: '#616060' }}>{scheduledDate.toLocaleTimeString()}</Text>
+                    <Text style={{ color: '#616060' }}>{scheduledDate?.toLocaleTimeString()}</Text>
                 </TouchableOpacity>
 
             </View>

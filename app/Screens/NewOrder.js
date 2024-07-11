@@ -22,8 +22,11 @@ export default function NewOrder() {
   const [isLoading, setIsLoading] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [phone, setPhone] = useState();
+  const [location, setLocation] = useState();
+  const [isLocationUpdate, setIsLocationUpdate] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState(null);
+
 
   useEffect(() => {
     const getLocation = async () => {
@@ -37,15 +40,16 @@ export default function NewOrder() {
 
       setIsLoading(true);
       let currentLocation = await Location.getCurrentPositionAsync();
+      setLocation(currentLocation);
 
       const currentAddress = await Location.reverseGeocodeAsync({
-        longitude: currentLocation.coords.longitude,
-        latitude: currentLocation.coords.latitude,
+        longitude: currentLocation?.coords?.longitude,
+        latitude: currentLocation?.coords?.latitude,
       });
 
       setIsLoading(false);
       const addressObject = currentAddress[0];
-      addressString = addressObject.district + ", " + addressObject.city + ", " + addressObject.region + ", " + addressObject.country + ", " + addressObject.postalCode;
+      addressString = addressObject?.district + ", " + addressObject?.city + ", " + addressObject?.region + ", " + addressObject?.country + ", " + addressObject?.postalCode;
       setAddress(addressString);
     };
     getLocation();
@@ -79,8 +83,19 @@ export default function NewOrder() {
   const addDataToDB = async () => {
     if (isValid()) {
       try {
-        const location = await geocode();
-        console.log(location);
+
+        let longitude = location?.coords?.longitude;
+        let latitude = location?.coords?.latitude;
+        console.log("original: ", longitude, latitude)
+        console.log("location value: ", isLocationUpdate)
+        if (isLocationUpdate) {
+          const newLocation = await geocode();
+          longitude = newLocation?.longitude;
+          latitude = newLocation?.latitude;
+          console.log("new: ", longitude, latitude)
+        }
+
+
         const currentUserUID = FIREBASE_AUTH.currentUser.uid;
 
         const data = { createdDate: new Date().getTime(), scheduledDate: scheduledDate.getTime(), fuelType, name, quantity, address }
@@ -90,7 +105,7 @@ export default function NewOrder() {
         console.log('Data stored successfully with unique ID:', newEntryRef.key);
         showToastMessage("Order requested successfully!");
         clearConsole();
-        whatsAppMessage(newEntryRef.key, name, (quantity + " liters"), phone, scheduledDate.toLocaleString(), address, location.longitude, location.latitude);
+        whatsAppMessage(newEntryRef.key, name, (quantity + " liters"), phone, scheduledDate.toLocaleString(), address, longitude, latitude);
       } catch (error) {
         console.log("error while adding a new entry to DB: ", error);
         setErrorMessage(error.message);
@@ -100,6 +115,7 @@ export default function NewOrder() {
   }
 
   const fetchSuggestions = async (text) => {
+    setIsLocationUpdate(true);
     setAddress(text);
     if (text.length > 2) {
       try {
@@ -242,7 +258,7 @@ export default function NewOrder() {
           />
         )}
       </KeyboardAvoidingView>
-      
+
       {(Platform.OS === 'android') && <DateTimeAndroid
         onTimeChange={onTimeChange}
       />}
