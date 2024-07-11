@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#e0dcdc'
     },
     time_button: {
-        width: '25%',
+        width: '30%',
         height: 32,
         borderColor: 'transparent',
         borderWidth: 2,

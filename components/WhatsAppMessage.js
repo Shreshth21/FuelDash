@@ -5,7 +5,7 @@ export const whatsAppMessage = async (orderId, name, quantity, phone, scheduledD
   const url = 'https://graph.facebook.com/v19.0/362646686931545/messages';
   const token = 'EAAf0LMFXqgsBOwipczaL6z0I9m7vR1G6qSVMZAbbToAZATika8vJ0CZAz0CILsSXh66fsSHumAB0IEoXxdSeXu11f5JZCUX9RobWaZB0UnfzNiABeC7iqgEZBxNNE46TY4mWP9HcFMTgFHqreSGBzfcfB95qf0KNIqKZA4TJUZA8KrZA1PPRWJdAgCbSJIEn9ZA1W8tAZDZD';
 
-  const recipient = '918460835256';
+  const recipient = '919998276465';
   const templateName = 'fuelorder2';
 
   const data = {

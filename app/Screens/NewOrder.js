@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Modal, Text, TextInput, TouchableOpacity, View, FlatList, Platform } from "react-native";
+import { ActivityIndicator, Alert, Modal, Text, TextInput, TouchableOpacity, View, FlatList, Platform, KeyboardAvoidingView } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import * as Location from "expo-location";
@@ -90,7 +90,7 @@ export default function NewOrder() {
         console.log('Data stored successfully with unique ID:', newEntryRef.key);
         showToastMessage("Order requested successfully!");
         clearConsole();
-        whatsAppMessage(newEntryRef.key, name, (quantity+" liters"), phone, scheduledDate.toLocaleString(), address, location.longitude, location.latitude);
+        whatsAppMessage(newEntryRef.key, name, (quantity + " liters"), phone, scheduledDate.toLocaleString(), address, location.longitude, location.latitude);
       } catch (error) {
         console.log("error while adding a new entry to DB: ", error);
         setErrorMessage(error.message);
@@ -223,26 +223,26 @@ export default function NewOrder() {
           <Text style={styles.submitButtonText}>Clear</Text>
         </TouchableOpacity>
       </View>
-
-      {suggestions.length > 0 && (
-        <FlatList
-          data={suggestions}
-          keyExtractor={(item) => item.place_id}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => {
-              setAddress(item.display_name);
-              setSuggestions([]);
-            }}>
-              <Text style={{ padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
-                {item.display_name}
-              </Text>
-            </TouchableOpacity>
-          )}
-          style={{ maxHeight: 200, borderWidth: 1, borderColor: '#ccc', borderRadius: 5 }}
-        />
-      )}
-
-
+      <KeyboardAvoidingView>
+        {suggestions.length > 0 && (
+          <FlatList
+            data={suggestions}
+            keyExtractor={(item) => item.place_id}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => {
+                setAddress(item.display_name);
+                setSuggestions([]);
+              }}>
+                <Text style={{ padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
+                  {item.display_name}
+                </Text>
+              </TouchableOpacity>
+            )}
+            style={{ maxHeight: 200, borderWidth: 1, borderColor: '#ccc', borderRadius: 5 }}
+          />
+        )}
+      </KeyboardAvoidingView>
+      
       {(Platform.OS === 'android') && <DateTimeAndroid
         onTimeChange={onTimeChange}
       />}
