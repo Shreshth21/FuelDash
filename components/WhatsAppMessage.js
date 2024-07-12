@@ -46,7 +46,6 @@ export const whatsAppMessage = async (orderId, name, quantity, phone, scheduledD
       ],
     },
   };
-  console.log("hello!")
   const headers = {
     'Authorization': `Bearer ${token}`,
     'Content-Type': 'application/json',
@@ -54,7 +53,7 @@ export const whatsAppMessage = async (orderId, name, quantity, phone, scheduledD
 
   axios.post(url, data, { headers })
     .then(response => {
-      console.log('Message sent successfully:', response.data);
+      console.log('Message sent successfully:', response?.data);
     })
     .catch(error => {
       console.error('Error sending message:', error);

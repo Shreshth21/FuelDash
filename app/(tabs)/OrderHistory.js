@@ -49,7 +49,7 @@ export default function OrderHistory() {
       <Text style={styles.cardText}>Name: {item.name}</Text>
       <Text style={styles.cardText}>Quantity: {item.quantity}</Text>
       <Text style={styles.cardText}>Address: {item.address}</Text>
-      <Text style={styles.cardText}>Scheduled time: {item.scheduledDate}</Text>
+      <Text style={styles.cardText}>Scheduled time: {formatDate(item.scheduledDate)}</Text>
     </View>
   ), []);
 
