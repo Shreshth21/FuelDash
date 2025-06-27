@@ -7,7 +7,7 @@ export const whatsAppMessage = async (orderId, name, quantity, phone, scheduledD
   const token =
     'EAAdcZB6VJnXgBOxYEn3YY871H0XSpmoQoWjoyHDgakXlddTXRCHrdMdZCRx3FopQWxx24e2kmzrwtfnjEchjOp8F9MLxtCL8ABsChtGTBt4ZACDQRfiZCzqzb6m3L9ibJbQ0ZB7403L5ZBikgYUOZB0W1Ae1ZAfnGEU9B5fDtIdMDBXraDakADTawANnrQIEtAZDZD';
 
-  const recipient = '919998276465';
+  const recipient = '916354422732';
   const templateName = 'fuelorder';
 
   const data = {
