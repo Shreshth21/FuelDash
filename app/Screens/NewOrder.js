@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Modal, Text, TextInput, TouchableOpacity, View, FlatList, Platform, KeyboardAvoidingView } from "react-native";
-import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import * as Location from "expo-location";
-import { ref, set, push, onValue } from 'firebase/database';
-import { FIREBASE_AUTH, FIREBASE_DB } from "../../FirebaseConfig";
-import styles from "../../StyleSheet";
 import axios from 'axios';
+import * as Location from "expo-location";
+import { onValue, push, ref, set } from 'firebase/database';
+import { useEffect, useState } from "react";
+import { ActivityIndicator, Alert, FlatList, KeyboardAvoidingView, Modal, Platform, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
 import DateTimeAndroid from "../../components/android/DateTimeAndroid";
 import DateTimeIos from "../../components/ios/DateTimeIos";
 import { showToastMessage } from '../../components/ToastMessage';
 import { whatsAppMessage } from '../../components/WhatsAppMessage';
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../FirebaseConfig";
+import styles from "../../StyleSheet";
 
 export default function NewOrder() {
 
@@ -49,7 +49,15 @@ export default function NewOrder() {
 
       setIsLoading(false);
       const addressObject = currentAddress[0];
-      addressString = addressObject?.district + ", " + addressObject?.city + ", " + addressObject?.region + ", " + addressObject?.country + ", " + addressObject?.postalCode;
+
+      const addressParts = [
+        addressObject?.district,
+        addressObject?.city,
+        addressObject?.region,
+        addressObject?.country,
+        addressObject?.postalCode,
+      ];
+      const addressString = addressParts.filter(Boolean).join(', ');
       setAddress(addressString);
     };
     getLocation();
