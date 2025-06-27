@@ -2,11 +2,13 @@ import axios from 'axios';
 
 export const whatsAppMessage = async (orderId, name, quantity, phone, scheduledDate, address, longitude, latitude) => {
 
-  const url = 'https://graph.facebook.com/v19.0/362646686931545/messages';
-  const token = 'EAAf0LMFXqgsBOwipczaL6z0I9m7vR1G6qSVMZAbbToAZATika8vJ0CZAz0CILsSXh66fsSHumAB0IEoXxdSeXu11f5JZCUX9RobWaZB0UnfzNiABeC7iqgEZBxNNE46TY4mWP9HcFMTgFHqreSGBzfcfB95qf0KNIqKZA4TJUZA8KrZA1PPRWJdAgCbSJIEn9ZA1W8tAZDZD';
+  const url = 'https://graph.facebook.com/v22.0/609422432264836/messages';
+
+  const token =
+    'EAAdcZB6VJnXgBOxYEn3YY871H0XSpmoQoWjoyHDgakXlddTXRCHrdMdZCRx3FopQWxx24e2kmzrwtfnjEchjOp8F9MLxtCL8ABsChtGTBt4ZACDQRfiZCzqzb6m3L9ibJbQ0ZB7403L5ZBikgYUOZB0W1Ae1ZAfnGEU9B5fDtIdMDBXraDakADTawANnrQIEtAZDZD';
 
   const recipient = '919998276465';
-  const templateName = 'fuelorder2';
+  const templateName = 'fuelorder';
 
   const data = {
     messaging_product: 'whatsapp',
