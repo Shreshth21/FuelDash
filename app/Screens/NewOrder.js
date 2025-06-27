@@ -141,8 +141,8 @@ export default function NewOrder() {
         phone,
         scheduledDate.toLocaleString(),
         address,
-        longitude,
-        latitude
+        longitude || 0,
+        latitude || 0
       );
 
     } catch (error) {
